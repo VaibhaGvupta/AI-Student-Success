@@ -1271,7 +1271,7 @@
                 </thead>
 
 
-                <tbody>
+        <tbody>
 
                     {% for record in academic_data %}
 
@@ -1543,9 +1543,7 @@
         </div>
 
         {% endif %}
-
-
-        <!-- STUDY RECOMMENDATIONS -->
+                <!-- STUDY RECOMMENDATIONS -->
 
         {% if ai_result.study_recommendations %}
 
@@ -1615,10 +1613,11 @@
 
         </div>
 
-        {% endif %}
-
-
-        <!-- 7 DAY STUDY PLAN -->
+        {% endif %}        
+        
+        <!-- =================================================
+             7 DAY STUDY PLAN
+        ================================================= -->
 
         {% if ai_result.study_plan %}
 
@@ -1637,8 +1636,7 @@
             </h2>
 
 
-            {% for day
-               in ai_result.study_plan %}
+            {% for day in ai_result.study_plan %}
 
             <div class="study-day">
 
@@ -1646,7 +1644,7 @@
 
                     {{ day.icon }}
 
-                    Day {{ day.day }}
+                    {{ day.day }}
 
                 </h3>
 
@@ -1655,7 +1653,7 @@
 
                     <strong>
 
-                        {{ day.subject }}
+                        {{ day.title }}
 
                     </strong>
 
@@ -1671,9 +1669,7 @@
 
                 <p class="time">
 
-                    {{ day.minutes }}
-
-                    minutes
+                    {{ day.time }}
 
                 </p>
 
@@ -1686,7 +1682,11 @@
         {% endif %}
 
 
-        <!-- AI RECOMMENDATION -->
+        <!-- =================================================
+             MAIN AI RECOMMENDATION
+        ================================================= -->
+
+        {% if ai_result.recommendation %}
 
         <div class="recommendation">
 
@@ -1702,8 +1702,14 @@
 
         </div>
 
+        {% endif %}
 
-        <!-- GOAL -->
+
+        <!-- =================================================
+             IMPROVEMENT GOAL
+        ================================================= -->
+
+        {% if ai_result.goal %}
 
         <div class="goal">
 
@@ -1719,53 +1725,61 @@
 
         </div>
 
+        {% endif %}
+                {% else %}
+
+        <div class="no-data">
+
+            Add academic data to receive
+            your AI student analysis.
+
+        </div>
 
         {% endif %}
 
     </div>
 
+
+    <!-- =================================================
+         AI STUDENT ASSISTANT
+    ================================================= -->
+
+    <a
+        href="{{ url_for('chatbot') }}"
+        class="ai-assistant-float"
+        aria-label="Open AI Student Assistant"
+    >
+
+        <span class="ai-assistant-dot"></span>
+
+        <span>
+
+            AI Student Assistant
+
+        </span>
+
+    </a>
+
+
+    <!-- =================================================
+         FOOTER
+    ================================================= -->
+
+    <div
+        style="
+            text-align:center;
+            padding:25px 0 90px;
+            color:#6b7280;
+            font-size:14px;
+        "
+    >
+
+        AI Student Success Platform
+        · Personalized academic insights and support
+
+    </div>
+
 </div>
-
-
-<!-- =====================================================
-     FLOATING AI ASSISTANT
-===================================================== -->
-
-<a
-    href="{{ url_for('chatbot') }}"
-    class="ai-assistant-float"
-    aria-label="Open AI Student Assistant"
->
-
-    <span class="ai-assistant-dot"></span>
-
-    AI Student Assistant
-
-</a>
-
-
-<!-- =====================================================
-     FOOTER
-===================================================== -->
-
-<footer
-    style="
-        width: 92%;
-        max-width: 1200px;
-        margin: 10px auto 35px;
-        padding: 18px 0;
-        border-top:
-            1px solid #e5e7eb;
-        color: #6b7280;
-        font-size: 13px;
-        text-align: center;
-    "
->
-
-    AI Student Success Platform ·
-    Personalized academic insights and support
-
-</footer>
 
 
 </body>
