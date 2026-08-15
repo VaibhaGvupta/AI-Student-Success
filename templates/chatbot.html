@@ -1,0 +1,1237 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>AI Student Assistant</title>
+
+    <link rel="preconnect"
+          href="https://fonts.googleapis.com">
+
+    <link rel="preconnect"
+          href="https://fonts.gstatic.com"
+          crossorigin>
+
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap"
+          rel="stylesheet">
+
+
+    <style>
+
+        * {
+            box-sizing: border-box;
+        }
+
+
+        body {
+            margin: 0;
+
+            font-family:
+                Inter,
+                -apple-system,
+                BlinkMacSystemFont,
+                "Segoe UI",
+                Roboto,
+                Helvetica,
+                Arial,
+                sans-serif;
+
+            background: #f5f7fb;
+
+            color: #172033;
+
+            letter-spacing: -0.01em;
+        }
+
+
+        /* =========================
+           HEADER
+        ========================= */
+
+        .header {
+
+            height: 72px;
+
+            background:
+                linear-gradient(
+                    135deg,
+                    #172554 0%,
+                    #1e3a8a 55%,
+                    #2563eb 100%
+                );
+
+            color: white;
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: space-between;
+
+            padding: 0 30px;
+
+            box-shadow:
+                0 2px 10px
+                rgba(15, 23, 42, 0.12);
+        }
+
+
+        .logo {
+
+            font-size: 21px;
+
+            font-weight: 700;
+
+            letter-spacing: -0.02em;
+        }
+
+
+        .back-button {
+
+            color: white;
+
+            text-decoration: none;
+
+            padding: 9px 15px;
+
+            border:
+                1px solid
+                rgba(255, 255, 255, 0.25);
+
+            border-radius: 7px;
+
+            font-size: 14px;
+
+            font-weight: 600;
+
+            transition:
+                background 0.2s ease,
+                transform 0.2s ease;
+        }
+
+
+        .back-button:hover {
+
+            background:
+                rgba(255, 255, 255, 0.10);
+
+            transform:
+                translateY(-1px);
+        }
+
+
+        /* =========================
+           MAIN CHAT AREA
+        ========================= */
+
+        .chat-wrapper {
+
+            width: 92%;
+
+            max-width: 1000px;
+
+            height:
+                calc(100vh - 112px);
+
+            min-height: 600px;
+
+            margin: 20px auto;
+
+            background: white;
+
+            border-radius: 14px;
+
+            box-shadow:
+                0 4px 20px
+                rgba(15, 23, 42, 0.08);
+
+            display: flex;
+
+            flex-direction: column;
+
+            overflow: hidden;
+
+            border:
+                1px solid
+                #e5e7eb;
+        }
+
+
+        /* =========================
+           CHAT HEADER
+        ========================= */
+
+        .chat-header {
+
+            padding: 20px 24px;
+
+            border-bottom:
+                1px solid
+                #e5e7eb;
+
+            display: flex;
+
+            align-items: center;
+
+            gap: 14px;
+
+            background: #ffffff;
+        }
+
+
+        .assistant-status {
+
+            width: 42px;
+
+            height: 42px;
+
+            border-radius: 10px;
+
+            background: #eff6ff;
+
+            border:
+                1px solid
+                #bfdbfe;
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: center;
+        }
+
+
+        .status-dot {
+
+            width: 10px;
+
+            height: 10px;
+
+            background: #22c55e;
+
+            border-radius: 50%;
+        }
+
+
+        .chat-title {
+
+            margin: 0;
+
+            font-size: 18px;
+
+            font-weight: 700;
+        }
+
+
+        .chat-subtitle {
+
+            margin: 4px 0 0;
+
+            font-size: 13px;
+
+            color: #6b7280;
+        }
+
+
+        /* =========================
+           MESSAGES AREA
+        ========================= */
+
+        .chat-messages {
+
+            flex: 1;
+
+            padding: 28px;
+
+            overflow-y: auto;
+
+            background:
+                #f8fafc;
+        }
+
+
+        .message-row {
+
+            display: flex;
+
+            margin-bottom: 22px;
+        }
+
+
+        .message-row.ai {
+
+            justify-content: flex-start;
+        }
+
+
+        .message-row.user {
+
+            justify-content: flex-end;
+        }
+
+
+        .message {
+
+            max-width: 75%;
+
+            padding: 14px 17px;
+
+            border-radius: 12px;
+
+            font-size: 14px;
+
+            line-height: 1.65;
+
+            white-space: pre-line;
+        }
+
+
+        .message.ai {
+
+            background: white;
+
+            border:
+                1px solid
+                #e5e7eb;
+
+            color: #374151;
+
+            border-bottom-left-radius: 4px;
+
+            box-shadow:
+                0 2px 6px
+                rgba(15, 23, 42, 0.04);
+        }
+
+
+        .message.user {
+
+            background: #2563eb;
+
+            color: white;
+
+            border-bottom-right-radius: 4px;
+
+            box-shadow:
+                0 3px 8px
+                rgba(37, 99, 235, 0.18);
+        }
+
+
+        .message-label {
+
+            font-size: 12px;
+
+            font-weight: 700;
+
+            margin-bottom: 6px;
+        }
+
+
+        .message.ai .message-label {
+
+            color: #1e3a8a;
+        }
+
+
+        .message.user .message-label {
+
+            color: #dbeafe;
+        }
+
+
+        /* =========================
+           WELCOME MESSAGE
+        ========================= */
+
+        .welcome-message {
+
+            max-width: 720px;
+
+            margin: 30px auto 35px;
+
+            text-align: center;
+        }
+
+
+        .welcome-message h2 {
+
+            margin: 0 0 10px;
+
+            font-size: 24px;
+
+            color: #172033;
+        }
+
+
+        .welcome-message p {
+
+            margin: 0;
+
+            color: #6b7280;
+
+            font-size: 14px;
+
+            line-height: 1.6;
+        }
+
+
+        /* =========================
+           SUGGESTED QUESTIONS
+        ========================= */
+
+        .suggestions {
+
+            display: grid;
+
+            grid-template-columns:
+                repeat(2, 1fr);
+
+            gap: 12px;
+
+            max-width: 720px;
+
+            margin: 0 auto 30px;
+        }
+
+
+        .suggestion-button {
+
+            background: white;
+
+            border:
+                1px solid
+                #dbe3ef;
+
+            color: #374151;
+
+            padding: 13px 15px;
+
+            border-radius: 9px;
+
+            text-align: left;
+
+            cursor: pointer;
+
+            font-family: inherit;
+
+            font-size: 13px;
+
+            line-height: 1.4;
+
+            transition:
+                border-color 0.2s ease,
+                background 0.2s ease,
+                transform 0.2s ease;
+        }
+
+
+        .suggestion-button:hover {
+
+            background: #eff6ff;
+
+            border-color: #93c5fd;
+
+            transform:
+                translateY(-1px);
+        }
+
+
+        /* =========================
+           INPUT AREA
+        ========================= */
+
+        .chat-input-area {
+
+            padding: 18px 22px;
+
+            border-top:
+                1px solid
+                #e5e7eb;
+
+            background: white;
+        }
+
+
+        .input-container {
+
+            display: flex;
+
+            align-items: flex-end;
+
+            gap: 10px;
+
+            background: #f8fafc;
+
+            border:
+                1px solid
+                #d1d5db;
+
+            border-radius: 11px;
+
+            padding: 8px;
+        }
+
+
+        .chat-input {
+
+            flex: 1;
+
+            border: none;
+
+            outline: none;
+
+            resize: none;
+
+            background: transparent;
+
+            font-family: inherit;
+
+            font-size: 14px;
+
+            line-height: 1.5;
+
+            color: #172033;
+
+            min-height: 42px;
+
+            max-height: 120px;
+
+            padding: 10px;
+        }
+
+
+        .chat-input::placeholder {
+
+            color: #9ca3af;
+        }
+
+
+        .send-button {
+
+            border: none;
+
+            background: #2563eb;
+
+            color: white;
+
+            padding: 11px 17px;
+
+            border-radius: 8px;
+
+            font-family: inherit;
+
+            font-size: 13px;
+
+            font-weight: 600;
+
+            cursor: pointer;
+
+            transition:
+                background 0.2s ease,
+                transform 0.2s ease;
+        }
+
+
+        .send-button:hover {
+
+            background: #1d4ed8;
+
+            transform:
+                translateY(-1px);
+        }
+
+
+        .send-button:disabled {
+
+            background: #93c5fd;
+
+            cursor: not-allowed;
+
+            transform: none;
+        }
+
+
+        .input-note {
+
+            margin: 8px 3px 0;
+
+            color: #9ca3af;
+
+            font-size: 11px;
+
+            text-align: center;
+        }
+
+
+        /* =========================
+           MOBILE
+        ========================= */
+
+        @media (max-width: 700px) {
+
+            .header {
+
+                height: auto;
+
+                min-height: 68px;
+
+                padding:
+                    14px 18px;
+
+                gap: 12px;
+            }
+
+
+            .logo {
+
+                font-size: 18px;
+            }
+
+
+            .back-button {
+
+                font-size: 13px;
+
+                padding:
+                    8px 11px;
+            }
+
+
+            .chat-wrapper {
+
+                width: 100%;
+
+                height:
+                    calc(100vh - 88px);
+
+                min-height: 500px;
+
+                margin: 10px 0;
+
+                border-radius: 0;
+
+                border-left: none;
+
+                border-right: none;
+            }
+
+
+            .chat-messages {
+
+                padding: 20px 16px;
+            }
+
+
+            .message {
+
+                max-width: 88%;
+            }
+
+
+            .suggestions {
+
+                grid-template-columns: 1fr;
+
+                margin-left: 10px;
+
+                margin-right: 10px;
+            }
+
+
+            .welcome-message h2 {
+
+                font-size: 21px;
+            }
+
+
+            .chat-input-area {
+
+                padding:
+                    12px;
+            }
+
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+
+<!-- =====================================================
+     HEADER
+===================================================== -->
+
+<header class="header">
+
+    <div class="logo">
+
+        AI Student Success Platform
+
+    </div>
+
+
+    <a
+        href="/dashboard"
+        class="back-button"
+    >
+
+        Back to Dashboard
+
+    </a>
+
+</header>
+
+
+
+<!-- =====================================================
+     CHAT WRAPPER
+===================================================== -->
+
+<main class="chat-wrapper">
+
+
+    <!-- =================================================
+         CHAT HEADER
+    ================================================= -->
+
+    <div class="chat-header">
+
+        <div class="assistant-status">
+
+            <span class="status-dot"></span>
+
+        </div>
+
+
+        <div>
+
+            <h1 class="chat-title">
+
+                AI Student Assistant
+
+            </h1>
+
+
+            <p class="chat-subtitle">
+
+                Your intelligent academic support assistant
+
+            </p>
+
+        </div>
+
+    </div>
+
+
+
+    <!-- =================================================
+         MESSAGES
+    ================================================= -->
+
+    <div
+        class="chat-messages"
+        id="chatMessages"
+    >
+
+
+        <!-- WELCOME -->
+
+        <div class="welcome-message">
+
+            <h2>
+
+                How can I help you today?
+
+            </h2>
+
+
+            <p>
+
+                Ask questions, understand difficult concepts,
+                prepare for exams, create study plans,
+                or get help with your academic work.
+
+            </p>
+
+        </div>
+
+
+
+        <!-- INITIAL AI MESSAGE -->
+
+        <div class="message-row ai">
+
+            <div class="message ai">
+
+                <div class="message-label">
+
+                    AI Student Assistant
+
+                </div>
+
+
+                Hello! I'm your AI Student Assistant.
+                You can ask me about your academic performance,
+                marks, attendance, grades, strongest subjects,
+                weakest subjects, or study advice.
+
+            </div>
+
+        </div>
+
+
+
+        <!-- SUGGESTIONS -->
+
+        <div class="suggestions">
+
+
+            <button
+                type="button"
+                class="suggestion-button"
+                onclick="useSuggestion(
+                    'How am I performing?'
+                )"
+            >
+
+                How am I performing?
+
+            </button>
+
+
+            <button
+                type="button"
+                class="suggestion-button"
+                onclick="useSuggestion(
+                    'What is my attendance?'
+                )"
+            >
+
+                What is my attendance?
+
+            </button>
+
+
+            <button
+                type="button"
+                class="suggestion-button"
+                onclick="useSuggestion(
+                    'Which is my best subject?'
+                )"
+            >
+
+                Which is my best subject?
+
+            </button>
+
+
+            <button
+                type="button"
+                class="suggestion-button"
+                onclick="useSuggestion(
+                    'Which subject should I improve?'
+                )"
+            >
+
+                Which subject should I improve?
+
+            </button>
+
+
+        </div>
+
+
+    </div>
+
+
+
+    <!-- =================================================
+         INPUT AREA
+    ================================================= -->
+
+    <div class="chat-input-area">
+
+
+        <div class="input-container">
+
+
+            <textarea
+                id="chatInput"
+                class="chat-input"
+                placeholder="Ask about your academic performance..."
+                rows="1"
+                onkeydown="handleKeyDown(event)"
+            ></textarea>
+
+
+            <button
+                type="button"
+                class="send-button"
+                id="sendButton"
+                onclick="sendMessage()"
+            >
+
+                Send
+
+            </button>
+
+
+        </div>
+
+
+        <div class="input-note">
+
+            AI Student Assistant uses your academic data
+            to provide personalized learning support.
+
+        </div>
+
+
+    </div>
+
+
+</main>
+
+
+
+<script>
+
+
+    /* =====================================================
+       SUGGESTION BUTTON
+    ===================================================== */
+
+    function useSuggestion(text) {
+
+        const input =
+            document.getElementById("chatInput");
+
+        input.value = text;
+
+        input.focus();
+
+    }
+
+
+
+    /* =====================================================
+       ENTER KEY
+    ===================================================== */
+
+    function handleKeyDown(event) {
+
+        if (
+            event.key === "Enter" &&
+            !event.shiftKey
+        ) {
+
+            event.preventDefault();
+
+            sendMessage();
+
+        }
+
+    }
+
+
+
+    /* =====================================================
+       SEND MESSAGE
+       CONNECT TO FLASK BACKEND
+    ===================================================== */
+
+    async function sendMessage() {
+
+        const input =
+            document.getElementById("chatInput");
+
+        const messages =
+            document.getElementById("chatMessages");
+
+        const sendButton =
+            document.getElementById("sendButton");
+
+        const text =
+            input.value.trim();
+
+
+        if (!text) {
+
+            return;
+
+        }
+
+
+        /* =========================
+           USER MESSAGE
+        ========================= */
+
+        const userRow =
+            document.createElement("div");
+
+        userRow.className =
+            "message-row user";
+
+
+        const userMessage =
+            document.createElement("div");
+
+        userMessage.className =
+            "message user";
+
+
+        userMessage.innerHTML = `
+
+            <div class="message-label">
+                You
+            </div>
+
+            ${escapeHtml(text)}
+
+        `;
+
+
+        userRow.appendChild(userMessage);
+
+        messages.appendChild(userRow);
+
+
+        /* Clear input */
+
+        input.value = "";
+
+        sendButton.disabled = true;
+
+
+        /* Scroll down */
+
+        messages.scrollTop =
+            messages.scrollHeight;
+
+
+        /* =========================
+           THINKING MESSAGE
+        ========================= */
+
+        const thinkingRow =
+            document.createElement("div");
+
+        thinkingRow.className =
+            "message-row ai";
+
+
+        const thinkingMessage =
+            document.createElement("div");
+
+        thinkingMessage.className =
+            "message ai";
+
+
+        thinkingMessage.innerHTML = `
+
+            <div class="message-label">
+                AI Student Assistant
+            </div>
+
+            Thinking...
+
+        `;
+
+
+        thinkingRow.appendChild(thinkingMessage);
+
+        messages.appendChild(thinkingRow);
+
+
+        messages.scrollTop =
+            messages.scrollHeight;
+
+
+        /* =========================
+           SEND TO FLASK
+        ========================= */
+
+        try {
+
+            const formData =
+                new FormData();
+
+            formData.append(
+                "message",
+                text
+            );
+
+
+            const response =
+                await fetch(
+                    "/chatbot",
+                    {
+                        method: "POST",
+                        body: formData
+                    }
+                );
+
+
+            /* =========================
+               CHECK SERVER RESPONSE
+            ========================= */
+
+            if (!response.ok) {
+
+                throw new Error(
+                    "Server error: " +
+                    response.status
+                );
+
+            }
+
+
+            /* =========================
+               READ JSON RESPONSE
+            ========================= */
+
+            const data =
+                await response.json();
+
+
+            /* =========================
+               REMOVE THINKING MESSAGE
+            ========================= */
+
+            thinkingRow.remove();
+
+
+            /* =========================
+               AI RESPONSE
+            ========================= */
+
+            const aiRow =
+                document.createElement("div");
+
+            aiRow.className =
+                "message-row ai";
+
+
+            const aiMessage =
+                document.createElement("div");
+
+            aiMessage.className =
+                "message ai";
+
+
+            aiMessage.innerHTML = `
+
+                <div class="message-label">
+                    AI Student Assistant
+                </div>
+
+                ${escapeHtml(
+                    data.response
+                )}
+
+            `;
+
+
+            aiRow.appendChild(aiMessage);
+
+            messages.appendChild(aiRow);
+
+
+            /* Scroll down */
+
+            messages.scrollTop =
+                messages.scrollHeight;
+
+
+        } catch (error) {
+
+            console.error(
+                "Chatbot error:",
+                error
+            );
+
+
+            /* Remove thinking message */
+
+            thinkingRow.remove();
+
+
+            /* =========================
+               ERROR MESSAGE
+            ========================= */
+
+            const errorRow =
+                document.createElement("div");
+
+            errorRow.className =
+                "message-row ai";
+
+
+            const errorMessage =
+                document.createElement("div");
+
+            errorMessage.className =
+                "message ai";
+
+
+            errorMessage.innerHTML = `
+
+                <div class="message-label">
+                    AI Student Assistant
+                </div>
+
+                Sorry, I could not connect to
+                the AI assistant. Please try again.
+
+            `;
+
+
+            errorRow.appendChild(errorMessage);
+
+            messages.appendChild(errorRow);
+
+
+            messages.scrollTop =
+                messages.scrollHeight;
+
+        }
+
+
+        sendButton.disabled = false;
+
+    }
+
+
+
+    /* =====================================================
+       HTML ESCAPE
+    ===================================================== */
+
+    function escapeHtml(text) {
+
+        const div =
+            document.createElement("div");
+
+        div.textContent =
+            text;
+
+        return div.innerHTML;
+
+    }
+
+
+</script>
+
+
+</body>
+
+</html>

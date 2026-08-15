@@ -1,0 +1,420 @@
+```html
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>Add Academic Data - AI Student Success Platform</title>
+
+    <style>
+
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            font-family: Arial, Helvetica, sans-serif;
+            background: #f4f7fb;
+            color: #1f2937;
+        }
+
+        .navbar {
+            background: #1f2937;
+            color: white;
+            padding: 18px 30px;
+
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .navbar h2 {
+            margin: 0;
+            font-size: 21px;
+        }
+
+        .logout {
+            color: white;
+            text-decoration: none;
+            background: #ef4444;
+            padding: 9px 16px;
+            border-radius: 7px;
+            font-size: 14px;
+        }
+
+        .logout:hover {
+            background: #dc2626;
+        }
+
+        .container {
+            width: 90%;
+            max-width: 650px;
+            margin: 45px auto;
+        }
+
+        .form-box {
+            background: white;
+            padding: 35px;
+            border-radius: 14px;
+
+            box-shadow:
+                0 5px 20px rgba(0, 0, 0, 0.08);
+        }
+
+        .form-box h1 {
+            margin-top: 0;
+            margin-bottom: 10px;
+            font-size: 28px;
+        }
+
+        .subtitle {
+            color: #6b7280;
+            margin-bottom: 28px;
+            line-height: 1.5;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: bold;
+            color: #374151;
+        }
+
+        input,
+        select {
+            width: 100%;
+            padding: 12px 14px;
+
+            border: 1px solid #d1d5db;
+            border-radius: 8px;
+
+            font-size: 15px;
+            background: white;
+            outline: none;
+        }
+
+        input:focus,
+        select:focus {
+            border-color: #2563eb;
+
+            box-shadow:
+                0 0 0 3px rgba(37, 99, 235, 0.12);
+        }
+
+        .help-text {
+            margin-top: 6px;
+            font-size: 13px;
+            color: #6b7280;
+        }
+
+        .save-button {
+            width: 100%;
+            margin-top: 8px;
+
+            padding: 13px 18px;
+
+            border: none;
+            border-radius: 8px;
+
+            background: #2563eb;
+            color: white;
+
+            font-size: 16px;
+            font-weight: bold;
+
+            cursor: pointer;
+        }
+
+        .save-button:hover {
+            background: #1d4ed8;
+        }
+
+        .back-link {
+            display: block;
+
+            text-align: center;
+
+            margin-top: 20px;
+
+            color: #2563eb;
+
+            text-decoration: none;
+
+            font-weight: 600;
+        }
+
+        .back-link:hover {
+            text-decoration: underline;
+        }
+
+        .info-box {
+            margin-bottom: 25px;
+
+            padding: 14px 16px;
+
+            background: #eff6ff;
+
+            border-left: 4px solid #2563eb;
+
+            border-radius: 6px;
+
+            color: #1e40af;
+
+            font-size: 14px;
+
+            line-height: 1.5;
+        }
+
+        @media (max-width: 600px) {
+
+            .navbar {
+                padding: 15px 18px;
+            }
+
+            .navbar h2 {
+                font-size: 17px;
+            }
+
+            .container {
+                width: 94%;
+                margin: 25px auto;
+            }
+
+            .form-box {
+                padding: 25px 20px;
+            }
+
+            .form-box h1 {
+                font-size: 24px;
+            }
+
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+
+    <!-- =========================
+         NAVBAR
+    ========================== -->
+
+    <div class="navbar">
+
+        <h2>
+            🎓 AI Student Success Platform
+        </h2>
+
+        <a
+            href="/logout"
+            class="logout"
+        >
+            Logout
+        </a>
+
+    </div>
+
+
+    <!-- =========================
+         MAIN CONTENT
+    ========================== -->
+
+    <div class="container">
+
+        <div class="form-box">
+
+
+            <h1>
+                📚 Add Academic Data
+            </h1>
+
+
+            <p class="subtitle">
+                Add a subject, your marks, and attendance to update
+                your academic performance analysis.
+            </p>
+
+
+            <div class="info-box">
+
+                💡 <strong>Tip:</strong>
+                Enter accurate marks and attendance so the AI
+                performance analysis and future recommendation
+                system can provide better results.
+
+            </div>
+
+
+            <!-- IMPORTANT:
+                 The Flask route is /add-academic
+                 NOT /save-academic
+            -->
+
+            <form
+                action="/add-academic"
+                method="POST"
+            >
+
+
+                <!-- =========================
+                     SEMESTER
+                ========================== -->
+
+                <div class="form-group">
+
+                    <label for="semester">
+                        Semester
+                    </label>
+
+                    <select
+                        id="semester"
+                        name="semester"
+                        required
+                    >
+
+                        {% for number in range(1, 9) %}
+
+                            <option
+                                value="{{ number }}"
+                            >
+                                Semester {{ number }}
+                            </option>
+
+                        {% endfor %}
+
+                    </select>
+
+                </div>
+
+
+                <!-- =========================
+                     SUBJECT
+                ========================== -->
+
+                <div class="form-group">
+
+                    <label for="subject">
+                        Subject
+                    </label>
+
+                    <input
+                        type="text"
+                        id="subject"
+                        name="subject"
+                        placeholder="Example: Python"
+                        required
+                        autocomplete="off"
+                    >
+
+                    <div class="help-text">
+                        Enter the name of the subject you want to add.
+                    </div>
+
+                </div>
+
+
+                <!-- =========================
+                     MARKS
+                ========================== -->
+
+                <div class="form-group">
+
+                    <label for="marks">
+                        Marks
+                    </label>
+
+                    <input
+                        type="number"
+                        id="marks"
+                        name="marks"
+                        min="0"
+                        max="100"
+                        step="0.01"
+                        placeholder="Example: 85"
+                        required
+                    >
+
+                    <div class="help-text">
+                        Enter marks between 0 and 100.
+                    </div>
+
+                </div>
+
+
+                <!-- =========================
+                     ATTENDANCE
+                ========================== -->
+
+                <div class="form-group">
+
+                    <label for="attendance">
+                        Attendance (%)
+                    </label>
+
+                    <input
+                        type="number"
+                        id="attendance"
+                        name="attendance"
+                        min="0"
+                        max="100"
+                        step="0.01"
+                        placeholder="Example: 90"
+                        required
+                    >
+
+                    <div class="help-text">
+                        Enter attendance percentage between 0 and 100.
+                    </div>
+
+                </div>
+
+
+                <!-- =========================
+                     SUBMIT
+                ========================== -->
+
+                <button
+                    type="submit"
+                    class="save-button"
+                >
+                    💾 Save Academic Data
+                </button>
+
+
+            </form>
+
+
+            <!-- =========================
+                 BACK TO DASHBOARD
+            ========================== -->
+
+            <a
+                href="/dashboard"
+                class="back-link"
+            >
+                ← Back to Dashboard
+            </a>
+
+
+        </div>
+
+    </div>
+
+
+</body>
+
+</html>
+```

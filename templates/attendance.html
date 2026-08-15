@@ -1,0 +1,309 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>Attendance Analysis</title>
+
+    <style>
+
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background: #f4f7fb;
+            color: #1f2937;
+        }
+
+        .header {
+            background: #1e3a8a;
+            color: white;
+            padding: 18px 30px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 22px;
+            font-weight: bold;
+        }
+
+        .logout {
+            background: #ef4444;
+            color: white;
+            text-decoration: none;
+            padding: 10px 15px;
+            border-radius: 7px;
+            font-weight: bold;
+        }
+
+        .container {
+            width: 92%;
+            max-width: 1000px;
+            margin: 30px auto;
+        }
+
+        .back-button {
+            display: inline-block;
+            margin-bottom: 20px;
+            background: #374151;
+            color: white;
+            text-decoration: none;
+            padding: 10px 15px;
+            border-radius: 7px;
+        }
+
+        .title-card {
+            background: white;
+            padding: 25px;
+            border-radius: 12px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+            margin-bottom: 25px;
+        }
+
+        .title-card h1 {
+            margin: 0 0 8px 0;
+        }
+
+        .title-card p {
+            color: #6b7280;
+            margin: 0;
+        }
+
+        .overall-card {
+            background: white;
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+            text-align: center;
+            margin-bottom: 25px;
+        }
+
+        .overall-title {
+            color: #6b7280;
+            font-size: 16px;
+            margin-bottom: 10px;
+        }
+
+        .overall-value {
+            font-size: 42px;
+            font-weight: bold;
+            color: #1e3a8a;
+        }
+
+        .attendance-list {
+            background: white;
+            padding: 25px;
+            border-radius: 12px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+        }
+
+        .attendance-list h2 {
+            margin-top: 0;
+        }
+
+        .subject-row {
+            margin-bottom: 22px;
+        }
+
+        .subject-header {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 8px;
+        }
+
+        .subject-name {
+            font-weight: bold;
+        }
+
+        .subject-value {
+            font-weight: bold;
+        }
+
+        .progress-bar {
+            width: 100%;
+            height: 14px;
+            background: #e5e7eb;
+            border-radius: 10px;
+            overflow: hidden;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: #16a34a;
+            border-radius: 10px;
+        }
+
+        .no-data {
+            text-align: center;
+            padding: 30px;
+            color: #6b7280;
+        }
+
+        @media (max-width: 600px) {
+
+            .header {
+                flex-direction: column;
+                gap: 12px;
+                align-items: flex-start;
+            }
+
+            .container {
+                width: 94%;
+            }
+
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+
+<header class="header">
+
+    <div class="logo">
+
+        🎓 AI Student Success Platform
+
+    </div>
+
+    <a
+        href="{{ url_for('logout') }}"
+        class="logout"
+    >
+
+        Logout
+
+    </a>
+
+</header>
+
+
+
+<div class="container">
+
+
+    <a
+        href="{{ url_for('dashboard', semester=semester) }}"
+        class="back-button"
+    >
+
+        ← Back to Dashboard
+
+    </a>
+
+
+
+    <div class="title-card">
+
+        <h1>
+
+            📅 Attendance Analysis
+
+        </h1>
+
+        <p>
+
+            Semester {{ semester }} attendance overview
+
+        </p>
+
+    </div>
+
+
+
+    <div class="overall-card">
+
+        <div class="overall-title">
+
+            Overall Attendance
+
+        </div>
+
+        <div class="overall-value">
+
+            {{ attendance }}%
+
+        </div>
+
+    </div>
+
+
+
+    <div class="attendance-list">
+
+        <h2>
+
+            📚 Subject-wise Attendance
+
+        </h2>
+
+
+        {% if academic_data %}
+
+            {% for record in academic_data %}
+
+                <div class="subject-row">
+
+                    <div class="subject-header">
+
+                        <span class="subject-name">
+
+                            {{ record[1] }}
+
+                        </span>
+
+                        <span class="subject-value">
+
+                            {{ record[3] }}%
+
+                        </span>
+
+                    </div>
+
+
+                    <div class="progress-bar">
+
+                        <div
+                            class="progress-fill"
+                            style="width: {{ record[3] }}%;"
+                        ></div>
+
+                    </div>
+
+                </div>
+
+            {% endfor %}
+
+        {% else %}
+
+            <div class="no-data">
+
+                No attendance data available for
+                Semester {{ semester }}.
+
+            </div>
+
+        {% endif %}
+
+    </div>
+
+
+</div>
+
+
+</body>
+
+</html>
