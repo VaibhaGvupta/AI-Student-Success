@@ -12,6 +12,41 @@ app.secret_key = "ai_student_success_secret_key"
 
 
 # =========================================================
+# INITIALIZE DATABASE SCHEMA
+# =========================================================
+
+def init_database():
+    conn = sqlite3.connect("students.db")
+    cursor = conn.cursor()
+
+    cursor.execute("""
+    CREATE TABLE IF NOT EXISTS students (
+        id INTEGER PRIMARY KEY AUTOINCREMENT,
+        name TEXT NOT NULL,
+        email TEXT UNIQUE NOT NULL,
+        password TEXT NOT NULL
+    )
+    """)
+
+    cursor.execute("""
+    CREATE TABLE IF NOT EXISTS academic_data (
+        id INTEGER PRIMARY KEY AUTOINCREMENT,
+        student_id INTEGER NOT NULL,
+        semester INTEGER NOT NULL DEFAULT 1,
+        subject TEXT NOT NULL,
+        marks REAL NOT NULL,
+        attendance REAL NOT NULL,
+        FOREIGN KEY (student_id) REFERENCES students(id)
+    )
+    """)
+
+    conn.commit()
+    conn.close()
+
+init_database()
+
+
+# =========================================================
 # HOME
 # =========================================================
 
@@ -892,23 +927,25 @@ def add_academic_data():
         )
 
 
-    subject = request.form["subject"].strip()
+    subject = request.form.get("subject", "").strip()
 
+    try:
+        marks = float(request.form.get("marks", 0))
+        attendance = float(request.form.get("attendance", 0))
+        semester = int(request.form.get("semester", 1))
+    except (ValueError, TypeError):
+        return render_template(
+            "add_academic.html",
+            semester=1,
+            error="Please enter valid numbers for marks and attendance."
+        )
 
-    marks = int(
-        request.form["marks"]
-    )
-
-
-    attendance = int(
-        request.form["attendance"]
-    )
-
-
-    semester = int(
-        request.form["semester"]
-    )
-
+    if not subject:
+        return render_template(
+            "add_academic.html",
+            semester=semester,
+            error="Please enter a subject name."
+        )
 
     conn = sqlite3.connect("students.db")
 
@@ -1068,23 +1105,21 @@ def update_academic(academic_id):
         )
 
 
-    subject = request.form["subject"].strip()
+    subject = request.form.get("subject", "").strip()
 
+    try:
+        marks = float(request.form.get("marks", 0))
+        attendance = float(request.form.get("attendance", 0))
+        semester = int(request.form.get("semester", 1))
+    except (ValueError, TypeError):
+        return redirect(
+            url_for("dashboard")
+        )
 
-    marks = int(
-        request.form["marks"]
-    )
-
-
-    attendance = int(
-        request.form["attendance"]
-    )
-
-
-    semester = int(
-        request.form["semester"]
-    )
-
+    if not subject:
+        return redirect(
+            url_for("dashboard")
+        )
 
     conn = sqlite3.connect("students.db")
 
