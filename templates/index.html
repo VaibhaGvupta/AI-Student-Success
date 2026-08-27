@@ -97,6 +97,21 @@
         .signup a:hover {
             text-decoration: underline;
         }
+
+        .error-alert {
+            background: #fef2f2;
+            border: 1px solid #fecaca;
+            color: #b91c1c;
+            padding: 10px 14px;
+            border-radius: 8px;
+            margin-bottom: 18px;
+            font-size: 13.5px;
+            text-align: left;
+            line-height: 1.4;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
     </style>
 </head>
 
@@ -113,6 +128,15 @@
         </p>
 
 
+        <!-- ERROR MESSAGE -->
+        {% if error %}
+        <div class="error-alert">
+            <span>⚠️</span>
+            <span>{{ error }}</span>
+        </div>
+        {% endif %}
+
+
         <!-- =========================
              LOGIN FORM
         ========================== -->
@@ -123,6 +147,7 @@
                 type="email"
                 name="email"
                 placeholder="Enter your email"
+                value="{{ email|default('') }}"
                 required
             >
 

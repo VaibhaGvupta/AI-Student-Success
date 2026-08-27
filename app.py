@@ -41,8 +41,16 @@ def login():
     # PROCESS LOGIN
     # -----------------------------------------------------
 
-    email = request.form["email"].strip()
-    password = request.form["password"]
+    email = request.form.get("email", "").strip()
+    password = request.form.get("password", "")
+
+    if not email or not password:
+
+        return render_template(
+            "login.html",
+            error="Please enter both email and password.",
+            email=email
+        )
 
     conn = sqlite3.connect("students.db")
     cursor = conn.cursor()
@@ -75,7 +83,11 @@ def login():
 
     else:
 
-        return "Invalid email or password"
+        return render_template(
+            "login.html",
+            error="Invalid email or password. Please try again.",
+            email=email
+        )
 
 
 # =========================================================
@@ -490,16 +502,40 @@ def create_account():
 @app.route("/register", methods=["POST"])
 def register():
 
-    name = request.form["name"].strip()
+    name = request.form.get("name", "").strip()
+    email = request.form.get("email", "").strip()
+    password = request.form.get("password", "")
+    confirm_password = request.form.get("confirm_password", "")
 
-    email = request.form["email"].strip()
+    if not name or not email or not password:
 
-    password = request.form["password"]
+        return render_template(
+            "create_account.html",
+            error="All fields are required.",
+            name=name,
+            email=email
+        )
 
+    if len(password) < 6:
+
+        return render_template(
+            "create_account.html",
+            error="Password must be at least 6 characters long.",
+            name=name,
+            email=email
+        )
+
+    if password != confirm_password:
+
+        return render_template(
+            "create_account.html",
+            error="Passwords do not match. Please verify your password.",
+            name=name,
+            email=email
+        )
 
     conn = sqlite3.connect("students.db")
     cursor = conn.cursor()
-
 
     try:
 
@@ -517,34 +553,31 @@ def register():
             )
         )
 
-
         conn.commit()
-
 
         # Get newly created student's ID
         student_id = cursor.lastrowid
 
-
         # Automatically log the new user in
         session["student_id"] = student_id
-
         session["student_name"] = name
-
 
         # Store success notification
         session["account_created"] = True
-
 
         # Go directly to dashboard
         return redirect(
             url_for("dashboard")
         )
 
-
     except sqlite3.IntegrityError:
 
-        return "Email already registered!"
-
+        return render_template(
+            "create_account.html",
+            error="This email address is already registered. Please login instead.",
+            name=name,
+            email=email
+        )
 
     finally:
 

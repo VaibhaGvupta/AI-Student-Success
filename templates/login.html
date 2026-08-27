@@ -247,6 +247,38 @@
             color: #2563eb;
         }
 
+        .error-alert {
+            background: #fef2f2;
+            border: 1px solid #fecaca;
+            color: #b91c1c;
+            padding: 12px 14px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+            font-size: 14px;
+            line-height: 1.5;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            animation: shake 0.4s ease-in-out;
+            box-shadow: 0 2px 8px rgba(239, 68, 68, 0.08);
+        }
+
+        .error-icon {
+            font-size: 18px;
+            flex-shrink: 0;
+        }
+
+        .error-text {
+            flex: 1;
+            font-weight: 500;
+        }
+
+        @keyframes shake {
+            0%, 100% { transform: translateX(0); }
+            20%, 60% { transform: translateX(-6px); }
+            40%, 80% { transform: translateX(6px); }
+        }
+
         @media (max-width: 480px) {
 
             .card {
@@ -296,6 +328,15 @@
             </p>
 
 
+            <!-- ERROR MESSAGE -->
+            {% if error %}
+            <div class="error-alert">
+                <span class="error-icon">⚠️</span>
+                <span class="error-text">{{ error }}</span>
+            </div>
+            {% endif %}
+
+
             <!-- LOGIN FORM -->
 
             <form
@@ -316,6 +357,7 @@
                         id="email"
                         name="email"
                         placeholder="Enter your email"
+                        value="{{ email|default('') }}"
                         required
                     >
 
