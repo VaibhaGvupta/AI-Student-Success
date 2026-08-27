@@ -103,49 +103,14 @@ def forgot_password():
     # GET FORM DATA
     # -----------------------------------------------------
 
-    email = request.form["email"].strip()
+    email = request.form.get("email", "").strip()
 
-    new_password = request.form["new_password"]
+    if not email:
 
-    confirm_password = request.form["confirm_password"]
-
-
-    # -----------------------------------------------------
-    # CHECK PASSWORD LENGTH
-    # -----------------------------------------------------
-
-    if len(new_password) < 6:
-
-        return """
-        <h2>Password is too short.</h2>
-
-        <p>
-            Password must be at least 6 characters long.
-        </p>
-
-        <a href="/forgot-password">
-            Go Back
-        </a>
-        """
-
-
-    # -----------------------------------------------------
-    # CHECK PASSWORD MATCH
-    # -----------------------------------------------------
-
-    if new_password != confirm_password:
-
-        return """
-        <h2>Passwords do not match.</h2>
-
-        <p>
-            Please make sure both passwords are the same.
-        </p>
-
-        <a href="/forgot-password">
-            Go Back
-        </a>
-        """
+        return render_template(
+            "forgot_password.html",
+            error="Please enter your email address."
+        )
 
 
     # -----------------------------------------------------
@@ -171,6 +136,8 @@ def forgot_password():
 
     student = cursor.fetchone()
 
+    conn.close()
+
 
     # -----------------------------------------------------
     # EMAIL NOT FOUND
@@ -178,19 +145,96 @@ def forgot_password():
 
     if not student:
 
-        conn.close()
+        return render_template(
+            "forgot_password.html",
+            error="No account found with that email address. Please check and try again."
+        )
 
-        return """
-        <h2>Email not registered.</h2>
 
-        <p>
-            Please check your email address and try again.
-        </p>
+    # -----------------------------------------------------
+    # STORE RESET EMAIL IN SESSION & REDIRECT
+    # -----------------------------------------------------
 
-        <a href="/forgot-password">
-            Go Back
-        </a>
-        """
+    session["reset_email"] = email
+
+    return redirect(
+        url_for("reset_password")
+    )
+
+
+# =========================================================
+# RESET PASSWORD
+# =========================================================
+
+@app.route(
+    "/reset-password",
+    methods=["GET", "POST"]
+)
+def reset_password():
+
+    # -----------------------------------------------------
+    # CHECK RESET SESSION
+    # -----------------------------------------------------
+
+    reset_email = session.get("reset_email")
+
+    if not reset_email:
+
+        return redirect(
+            url_for("forgot_password")
+        )
+
+
+    # -----------------------------------------------------
+    # SHOW RESET PASSWORD PAGE
+    # -----------------------------------------------------
+
+    if request.method == "GET":
+
+        return render_template(
+            "reset_password.html"
+        )
+
+
+    # -----------------------------------------------------
+    # GET FORM DATA
+    # -----------------------------------------------------
+
+    new_password = request.form.get("new_password", "")
+
+    confirm_password = request.form.get("confirm_password", "")
+
+
+    # -----------------------------------------------------
+    # CHECK PASSWORD LENGTH
+    # -----------------------------------------------------
+
+    if len(new_password) < 6:
+
+        return render_template(
+            "reset_password.html",
+            error="Password must be at least 6 characters long."
+        )
+
+
+    # -----------------------------------------------------
+    # CHECK PASSWORD MATCH
+    # -----------------------------------------------------
+
+    if new_password != confirm_password:
+
+        return render_template(
+            "reset_password.html",
+            error="Passwords do not match. Please ensure both passwords match."
+        )
+
+
+    # -----------------------------------------------------
+    # CONNECT DATABASE
+    # -----------------------------------------------------
+
+    conn = sqlite3.connect("students.db")
+    cursor = conn.cursor()
 
 
     # -----------------------------------------------------
@@ -205,10 +249,9 @@ def forgot_password():
         """,
         (
             new_password,
-            email
+            reset_email
         )
     )
-
 
     conn.commit()
 
@@ -216,24 +259,20 @@ def forgot_password():
 
 
     # -----------------------------------------------------
+    # CLEAR RESET SESSION
+    # -----------------------------------------------------
+
+    session.pop("reset_email", None)
+
+
+    # -----------------------------------------------------
     # PASSWORD RESET SUCCESS
     # -----------------------------------------------------
 
-    return """
-    <h2>Password reset successful!</h2>
+    return render_template(
+        "reset_success.html"
+    )
 
-    <p>
-        Your password has been updated successfully.
-    </p>
-
-    <p>
-        You can now login using your new password.
-    </p>
-
-    <a href="/login">
-        Go to Login
-    </a>
-    """
 
 
 # =========================================================
