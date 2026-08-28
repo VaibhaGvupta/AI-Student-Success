@@ -1,675 +1,438 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
+
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
     <title>Login - AI Student Success Platform</title>
-    
-    <!-- Google Fonts -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,400&display=swap" rel="stylesheet">
 
     <style>
-        :root {
-            --bg-dark: #050b1a;
-            --bg-dark-secondary: #0a1329;
-            --cyan-primary: #00f2fe;
-            --cyan-accent: #00dfa2;
-            --blue-accent: #3b82f6;
-            --text-white: #ffffff;
-            --text-muted: #94a3b8;
-            --text-dark: #0f172a;
-            --card-bg: #ffffff;
-            --card-border: #e2e8f0;
-            --font-main: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-        }
 
         * {
             box-sizing: border-box;
-            margin: 0;
-            padding: 0;
         }
 
         body {
-            font-family: var(--font-main);
-            background-color: var(--bg-dark);
-            color: var(--text-white);
+            margin: 0;
             min-height: 100vh;
-            display: flex;
-            flex-direction: column;
-            position: relative;
-            overflow-x: hidden;
-            background-image: 
-                radial-gradient(circle at 80% 20%, rgba(0, 242, 254, 0.12) 0%, transparent 40%),
-                radial-gradient(circle at 20% 80%, rgba(59, 130, 246, 0.15) 0%, transparent 45%),
-                radial-gradient(circle at 50% 50%, rgba(10, 19, 41, 0.8) 0%, var(--bg-dark) 100%),
-                radial-gradient(rgba(255, 255, 255, 0.08) 1px, transparent 1px);
-            background-size: 100% 100%, 100% 100%, 100% 100%, 28px 28px;
-        }
 
-        /* Ambient glow */
-        .ambient-glow {
-            position: absolute;
-            top: 20%;
-            right: 10%;
-            width: 450px;
-            height: 450px;
-            background: radial-gradient(circle, rgba(0, 242, 254, 0.18) 0%, rgba(59, 130, 246, 0.08) 50%, transparent 70%);
-            filter: blur(50px);
-            z-index: 0;
-            pointer-events: none;
-        }
+            font-family:
+                -apple-system,
+                BlinkMacSystemFont,
+                "Segoe UI",
+                Roboto,
+                Arial,
+                sans-serif;
 
-        /* TOP NAVIGATION */
-        .navbar {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 24px 60px;
-            position: relative;
-            z-index: 10;
-        }
+            background:
+                linear-gradient(
+                    135deg,
+                    #eff6ff,
+                    #f8fafc
+                );
 
-        .brand-logo {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            text-decoration: none;
-            color: var(--text-white);
-        }
+            color: #172033;
 
-        .logo-symbol {
-            width: 36px;
-            height: 36px;
-            position: relative;
             display: flex;
             align-items: center;
             justify-content: center;
+
+            padding: 20px;
         }
 
-        .logo-symbol svg {
+        .container {
             width: 100%;
-            height: 100%;
-            filter: drop-shadow(0 0 10px rgba(0, 242, 254, 0.6));
+            max-width: 430px;
         }
 
-        .brand-text {
-            font-size: 20px;
+        .brand {
+            text-align: center;
+            margin-bottom: 25px;
+        }
+
+        .brand h1 {
+            margin: 0;
+
+            font-size: 28px;
             font-weight: 800;
-            letter-spacing: -0.5px;
-            display: flex;
-            flex-direction: column;
-            line-height: 1.1;
+
+            color: #1e3a8a;
         }
 
-        .brand-text span.accent {
-            color: var(--cyan-primary);
-            font-size: 13px;
-            letter-spacing: 1.5px;
-            text-transform: uppercase;
-            font-weight: 700;
-        }
+        .brand p {
+            margin-top: 8px;
 
-        .nav-btn {
-            background: rgba(255, 255, 255, 0.1);
-            backdrop-filter: blur(10px);
-            border: 1px solid rgba(255, 255, 255, 0.15);
-            color: var(--text-white);
-            padding: 10px 24px;
-            border-radius: 999px;
-            font-weight: 600;
+            color: #64748b;
+
             font-size: 14px;
-            text-decoration: none;
-            transition: all 0.25s ease;
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
         }
 
-        .nav-btn:hover {
-            background: rgba(255, 255, 255, 0.2);
-            border-color: rgba(255, 255, 255, 0.35);
+        .card {
+            background: white;
+
+            border-radius: 16px;
+
+            padding: 32px;
+
+            box-shadow:
+                0 15px 40px
+                rgba(15, 23, 42, 0.10);
+
+            border: 1px solid #e2e8f0;
+        }
+
+        .card h2 {
+            margin-top: 0;
+            margin-bottom: 8px;
+
+            font-size: 24px;
+
+            color: #0f172a;
+        }
+
+        .subtitle {
+            margin-top: 0;
+            margin-bottom: 25px;
+
+            color: #64748b;
+
+            font-size: 14px;
+
+            line-height: 1.6;
+        }
+
+        .form-group {
+            margin-bottom: 18px;
+        }
+
+        .form-group label {
+            display: block;
+
+            margin-bottom: 7px;
+
+            font-weight: 600;
+
+            font-size: 14px;
+
+            color: #334155;
+        }
+
+        .form-group input {
+            width: 100%;
+
+            padding: 13px 14px;
+
+            border: 1px solid #cbd5e1;
+
+            border-radius: 9px;
+
+            font-size: 15px;
+
+            outline: none;
+
+            transition:
+                border-color 0.2s,
+                box-shadow 0.2s;
+        }
+
+        .form-group input:focus {
+            border-color: #2563eb;
+
+            box-shadow:
+                0 0 0 3px
+                rgba(37, 99, 235, 0.10);
+        }
+
+        .login-button {
+            width: 100%;
+
+            border: none;
+
+            border-radius: 9px;
+
+            padding: 13px;
+
+            background: #2563eb;
+
+            color: white;
+
+            font-size: 16px;
+
+            font-weight: 700;
+
+            cursor: pointer;
+
+            transition:
+                background 0.2s,
+                transform 0.2s;
+        }
+
+        .login-button:hover {
+            background: #1d4ed8;
+
             transform: translateY(-1px);
         }
 
-        /* MAIN HERO SECTION */
-        .hero-container {
-            max-width: 1320px;
-            margin: 0 auto;
-            padding: 20px 60px 60px;
-            display: grid;
-            grid-template-columns: 1.15fr 0.85fr;
-            gap: 60px;
-            align-items: center;
-            flex: 1;
-            position: relative;
-            z-index: 1;
+        .forgot-password {
+            display: block;
+
+            text-align: right;
+
+            margin-top: 12px;
+
+            color: #2563eb;
+
+            font-size: 14px;
+
+            font-weight: 600;
+
+            text-decoration: none;
         }
 
-        /* LEFT CONTENT */
-        .hero-left {
-            display: flex;
-            flex-direction: column;
-            gap: 24px;
-        }
-
-        .eyebrow-tag {
-            display: inline-flex;
-            align-items: center;
-            gap: 8px;
-            color: var(--cyan-primary);
-            font-size: 13px;
-            font-weight: 800;
-            letter-spacing: 2px;
-            text-transform: uppercase;
-        }
-
-        .eyebrow-tag::before {
-            content: "";
-            width: 8px;
-            height: 8px;
-            background: var(--cyan-primary);
-            border-radius: 50%;
-            box-shadow: 0 0 10px var(--cyan-primary);
-        }
-
-        .hero-headline {
-            font-size: 48px;
-            font-weight: 800;
-            line-height: 1.15;
-            letter-spacing: -1px;
-            color: var(--text-white);
-        }
-
-        .hero-description {
-            font-size: 17px;
-            line-height: 1.65;
-            color: var(--text-muted);
-            max-width: 580px;
-        }
-
-        .hero-callout {
-            font-size: 19px;
-            font-weight: 700;
-            color: var(--text-white);
-        }
-
-        .hero-callout .highlight-cyan {
-            color: var(--cyan-primary);
+        .forgot-password:hover {
             text-decoration: underline;
-            text-underline-offset: 4px;
         }
 
-        /* BADGES ROW */
-        .badges-grid {
-            display: grid;
-            grid-template-columns: repeat(4, 1fr);
-            gap: 14px;
-            margin-top: 15px;
-        }
-
-        .badge-card {
-            background: rgba(255, 255, 255, 0.04);
-            border: 1px solid rgba(255, 255, 255, 0.08);
-            border-radius: 12px;
-            padding: 14px 10px;
+        .links {
             text-align: center;
-            backdrop-filter: blur(6px);
-            transition: all 0.25s ease;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            gap: 4px;
+
+            margin-top: 22px;
+
+            padding-top: 20px;
+
+            border-top: 1px solid #e2e8f0;
         }
 
-        .badge-card:hover {
-            background: rgba(255, 255, 255, 0.08);
-            border-color: rgba(0, 242, 254, 0.3);
-            transform: translateY(-2px);
-        }
+        .links p {
+            margin: 0 0 10px;
 
-        .badge-icon {
-            font-size: 20px;
-            margin-bottom: 2px;
-        }
-
-        .badge-title {
-            font-size: 12px;
-            font-weight: 700;
-            color: var(--text-white);
-            line-height: 1.2;
-        }
-
-        .badge-sub {
-            font-size: 10px;
-            color: var(--text-muted);
-            font-weight: 500;
-        }
-
-        /* RIGHT FORM CARD */
-        .form-card {
-            background: var(--card-bg);
-            color: var(--text-dark);
-            border-radius: 20px;
-            padding: 38px 34px;
-            box-shadow: 
-                0 25px 60px rgba(0, 0, 0, 0.45),
-                0 0 0 1px rgba(255, 255, 255, 0.1);
-            position: relative;
-        }
-
-        .form-title {
-            font-size: 24px;
-            font-weight: 800;
-            color: var(--text-dark);
-            margin-bottom: 6px;
-            letter-spacing: -0.5px;
-        }
-
-        .form-subtitle {
-            font-size: 13.5px;
             color: #64748b;
-            margin-bottom: 22px;
+
+            font-size: 14px;
+        }
+
+        .links a {
+            color: #2563eb;
+
+            font-size: 14px;
+
+            font-weight: 600;
+
+            text-decoration: none;
+        }
+
+        .links a:hover {
+            text-decoration: underline;
+        }
+
+        .back-home {
+            display: block;
+
+            text-align: center;
+
+            margin-top: 18px;
+
+            color: #64748b;
+
+            text-decoration: none;
+
+            font-size: 14px;
+        }
+
+        .back-home:hover {
+            color: #2563eb;
         }
 
         .error-alert {
             background: #fef2f2;
             border: 1px solid #fecaca;
             color: #b91c1c;
-            padding: 11px 14px;
+            padding: 12px 14px;
             border-radius: 10px;
-            margin-bottom: 18px;
-            font-size: 13.5px;
+            margin-bottom: 20px;
+            font-size: 14px;
+            line-height: 1.5;
             display: flex;
             align-items: center;
             gap: 10px;
             animation: shake 0.4s ease-in-out;
+            box-shadow: 0 2px 8px rgba(239, 68, 68, 0.08);
+        }
+
+        .error-icon {
+            font-size: 18px;
+            flex-shrink: 0;
+        }
+
+        .error-text {
+            flex: 1;
+            font-weight: 500;
         }
 
         @keyframes shake {
             0%, 100% { transform: translateX(0); }
-            20%, 60% { transform: translateX(-5px); }
-            40%, 80% { transform: translateX(5px); }
+            20%, 60% { transform: translateX(-6px); }
+            40%, 80% { transform: translateX(6px); }
         }
 
-        .input-group {
-            margin-bottom: 16px;
-        }
+        @media (max-width: 480px) {
 
-        .form-control {
-            width: 100%;
-            padding: 13px 15px;
-            border: 1.5px solid var(--card-border);
-            border-radius: 10px;
-            font-size: 14.5px;
-            font-family: inherit;
-            color: #1e293b;
-            background-color: #f8fafc;
-            outline: none;
-            transition: all 0.2s ease;
-        }
-
-        .form-control:focus {
-            background-color: #ffffff;
-            border-color: #06b6d4;
-            box-shadow: 0 0 0 4px rgba(6, 182, 212, 0.12);
-        }
-
-        .form-control::placeholder {
-            color: #94a3b8;
-        }
-
-        /* PILLS SECTION */
-        .pills-container {
-            margin: 18px 0 22px;
-        }
-
-        .pills-label {
-            font-size: 13px;
-            font-weight: 700;
-            color: #334155;
-            margin-bottom: 10px;
-            display: block;
-        }
-
-        .pills-grid {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 8px;
-        }
-
-        .pill-chip {
-            padding: 6px 14px;
-            background: #f1f5f9;
-            border: 1.5px solid #e2e8f0;
-            border-radius: 999px;
-            font-size: 12.5px;
-            font-weight: 600;
-            color: #475569;
-            cursor: pointer;
-            user-select: none;
-            transition: all 0.2s ease;
-            display: inline-flex;
-            align-items: center;
-            gap: 5px;
-        }
-
-        .pill-chip:hover {
-            background: #e2e8f0;
-            color: #1e293b;
-        }
-
-        .pill-chip.active {
-            background: #4f46e5;
-            border-color: #4f46e5;
-            color: #ffffff;
-            box-shadow: 0 2px 8px rgba(79, 70, 229, 0.3);
-        }
-
-        /* SUBMIT BUTTON */
-        .submit-btn {
-            width: 100%;
-            padding: 15px;
-            background: linear-gradient(135deg, #00f2fe 0%, #00dfa2 100%);
-            border: none;
-            border-radius: 12px;
-            color: #041226;
-            font-size: 16px;
-            font-weight: 800;
-            font-family: inherit;
-            cursor: pointer;
-            transition: all 0.25s ease;
-            box-shadow: 0 10px 25px rgba(0, 242, 254, 0.35);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 8px;
-        }
-
-        .submit-btn:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 14px 30px rgba(0, 242, 254, 0.45);
-            filter: brightness(1.03);
-        }
-
-        .submit-btn:active {
-            transform: translateY(0);
-        }
-
-        .form-disclaimer {
-            margin-top: 14px;
-            font-size: 12px;
-            color: #64748b;
-            text-align: center;
-            line-height: 1.5;
-        }
-
-        .form-disclaimer a {
-            color: #2563eb;
-            text-decoration: none;
-            font-weight: 600;
-        }
-
-        .form-disclaimer a:hover {
-            text-decoration: underline;
-        }
-
-        .card-footer-links {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-top: 18px;
-            padding-top: 16px;
-            border-top: 1px solid #f1f5f9;
-            font-size: 13px;
-        }
-
-        .card-footer-links a {
-            color: #4f46e5;
-            text-decoration: none;
-            font-weight: 600;
-        }
-
-        .card-footer-links a:hover {
-            text-decoration: underline;
-        }
-
-        /* FLOATING BOTTOM BUTTONS */
-        .bottom-security {
-            position: fixed;
-            bottom: 24px;
-            left: 24px;
-            width: 44px;
-            height: 44px;
-            background: rgba(14, 165, 233, 0.15);
-            border: 1px solid rgba(14, 165, 233, 0.4);
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: var(--cyan-primary);
-            font-size: 20px;
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
-            z-index: 20;
-            backdrop-filter: blur(8px);
-        }
-
-        .bottom-chat {
-            position: fixed;
-            bottom: 24px;
-            right: 24px;
-            width: 48px;
-            height: 48px;
-            background: linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%);
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: #ffffff;
-            font-size: 22px;
-            box-shadow: 0 6px 20px rgba(99, 102, 241, 0.45);
-            z-index: 20;
-            text-decoration: none;
-            transition: all 0.25s ease;
-        }
-
-        .bottom-chat:hover {
-            transform: scale(1.08);
-        }
-
-        /* RESPONSIVE */
-        @media (max-width: 1080px) {
-            .hero-container {
-                grid-template-columns: 1fr;
-                gap: 40px;
-                padding: 10px 30px 50px;
+            .card {
+                padding: 25px 20px;
             }
-            .hero-headline {
-                font-size: 38px;
+
+            .brand h1 {
+                font-size: 24px;
             }
-            .navbar {
-                padding: 20px 30px;
-            }
+
         }
 
-        @media (max-width: 640px) {
-            .hero-headline {
-                font-size: 30px;
-            }
-            .badges-grid {
-                grid-template-columns: repeat(2, 1fr);
-            }
-            .form-card {
-                padding: 28px 20px;
-            }
-            .navbar {
-                padding: 18px 20px;
-            }
-            .nav-btn {
-                padding: 8px 16px;
-                font-size: 13px;
-            }
-        }
     </style>
+
 </head>
+
+
 <body>
 
-    <div class="ambient-glow"></div>
+    <div class="container">
 
-    <!-- NAVBAR -->
-    <header class="navbar">
-        <a href="{{ url_for('home') }}" class="brand-logo">
-            <div class="logo-symbol">
-                <svg viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <path d="M50 10C27.9 10 10 27.9 10 50C10 72.1 27.9 90 50 90C72.1 90 90 72.1 90 50" stroke="#00f2fe" stroke-width="12" stroke-linecap="round"/>
-                    <circle cx="50" cy="50" r="16" fill="#00dfa2"/>
-                    <path d="M75 25L50 50" stroke="#00f2fe" stroke-width="10" stroke-linecap="round"/>
-                </svg>
-            </div>
-            <div class="brand-text">
-                AI Student Success
-                <span class="accent">Intelligent Platform</span>
-            </div>
-        </a>
+        <!-- BRAND -->
 
-        <a href="{{ url_for('create_account') }}" class="nav-btn">
-            Create Account
-        </a>
-    </header>
+        <div class="brand">
 
-    <!-- MAIN HERO -->
-    <main class="hero-container">
-
-        <!-- LEFT HERO CONTENT -->
-        <section class="hero-left">
-            <div class="eyebrow-tag">
-                AI Academic Intelligence
-            </div>
-
-            <h1 class="hero-headline">
-                Unified Risk & Performance Platform for Fast-Growing Students
+            <h1>
+                AI Student Success Platform
             </h1>
 
-            <p class="hero-description">
-                Predict grade drops early. Analyze subject-wise performance and attendance trends across semesters. Get actionable AI study interventions tailored to your learning pace.
+            <p>
+                Personalized academic insights and support
             </p>
 
-            <div class="hero-callout">
-                Transform your academic journey with AI Student Success <span class="highlight-cyan">TODAY.</span>
-            </div>
+        </div>
 
-            <!-- TRUST / RECOGNITION BADGES -->
-            <div class="badges-grid">
-                <div class="badge-card">
-                    <div class="badge-icon">🎯</div>
-                    <div class="badge-title">96.4%</div>
-                    <div class="badge-sub">ML Accuracy</div>
-                </div>
-                <div class="badge-card">
-                    <div class="badge-icon">⚡</div>
-                    <div class="badge-title">Category Leader</div>
-                    <div class="badge-sub">AI Analytics 2025</div>
-                </div>
-                <div class="badge-card">
-                    <div class="badge-icon">🏆</div>
-                    <div class="badge-title">Top 50</div>
-                    <div class="badge-sub">Student Tech</div>
-                </div>
-                <div class="badge-card">
-                    <div class="badge-icon">📈</div>
-                    <div class="badge-title">+24% Avg</div>
-                    <div class="badge-sub">Grade Growth</div>
-                </div>
-            </div>
-        </section>
 
-        <!-- RIGHT FORM CARD -->
-        <section class="form-card">
-            <h2 class="form-title">Student Login</h2>
-            <p class="form-subtitle">Access your personalized academic AI dashboard</p>
+        <!-- LOGIN CARD -->
 
-            <!-- ERROR ALERT -->
+        <div class="card">
+
+            <h2>
+                Welcome Back 👋
+            </h2>
+
+            <p class="subtitle">
+                Login to access your student dashboard.
+            </p>
+
+
+            <!-- ERROR MESSAGE -->
             {% if error %}
             <div class="error-alert">
-                <span>⚠️</span>
-                <span>{{ error }}</span>
+                <span class="error-icon">⚠️</span>
+                <span class="error-text">{{ error }}</span>
             </div>
             {% endif %}
 
-            <form method="POST" action="{{ url_for('login') }}">
-                <div class="input-group">
-                    <input 
-                        type="email" 
-                        name="email" 
-                        class="form-control" 
-                        placeholder="Student or University Email*" 
+
+            <!-- LOGIN FORM -->
+
+            <form
+                method="POST"
+                action="{{ url_for('login') }}"
+            >
+
+                <!-- EMAIL -->
+
+                <div class="form-group">
+
+                    <label for="email">
+                        Email
+                    </label>
+
+                    <input
+                        type="email"
+                        id="email"
+                        name="email"
+                        placeholder="Enter your email"
                         value="{{ email|default('') }}"
                         required
                     >
+
                 </div>
 
-                <div class="input-group">
-                    <input 
-                        type="password" 
-                        name="password" 
-                        class="form-control" 
-                        placeholder="Password*" 
+
+                <!-- PASSWORD -->
+
+                <div class="form-group">
+
+                    <label for="password">
+                        Password
+                    </label>
+
+                    <input
+                        type="password"
+                        id="password"
+                        name="password"
+                        placeholder="Enter your password"
                         required
                     >
+
                 </div>
 
-                <!-- INTERACTIVE FOCUS PILLS -->
-                <div class="pills-container">
-                    <span class="pills-label">What goals do you want AI to help you with?</span>
-                    <div class="pills-grid">
-                        <div class="pill-chip active" onclick="togglePill(this)">✓ Grade Booster</div>
-                        <div class="pill-chip" onclick="togglePill(this)">Attendance AI</div>
-                        <div class="pill-chip" onclick="togglePill(this)">Risk Prediction</div>
-                        <div class="pill-chip" onclick="togglePill(this)">Study Plan</div>
-                        <div class="pill-chip" onclick="togglePill(this)">AI Tutor Chat</div>
-                        <div class="pill-chip" onclick="togglePill(this)">Exam Strategy</div>
-                    </div>
-                </div>
 
-                <button type="submit" class="submit-btn">
-                    <span>Access Dashboard Today</span>
-                    <span>→</span>
+                <!-- LOGIN BUTTON -->
+
+                <button
+                    type="submit"
+                    class="login-button"
+                >
+                    Login
                 </button>
 
-                <p class="form-disclaimer">
-                    Need help recovering your credentials? <a href="{{ url_for('forgot_password') }}">Click here</a><br>
-                    By logging in, you agree to the <a href="#">Platform Terms of Service</a>
+            </form>
+
+
+            <!-- FORGOT PASSWORD -->
+
+            <a
+                href="{{ url_for('forgot_password') }}"
+                class="forgot-password"
+            >
+                Forgot Password?
+            </a>
+
+
+            <!-- CREATE ACCOUNT -->
+
+            <div class="links">
+
+                <p>
+                    Don't have an account?
                 </p>
 
-                <div class="card-footer-links">
-                    <a href="{{ url_for('forgot_password') }}">Forgot Password?</a>
-                    <a href="{{ url_for('create_account') }}">Don't have an account? Sign Up →</a>
-                </div>
-            </form>
-        </section>
+                <a href="{{ url_for('create_account') }}">
+                    Create Account
+                </a>
 
-    </main>
+            </div>
 
-    <!-- FLOATING ICONS (FROM REFERENCE DESIGN) -->
-    <div class="bottom-security" title="Secured with AES & SQLite DB">
-        🛡️
+        </div>
+
+
+        <!-- HOME -->
+
+        <a
+            href="{{ url_for('home') }}"
+            class="back-home"
+        >
+            ← Back to Home
+        </a>
+
     </div>
 
-    <a href="{{ url_for('login') }}" class="bottom-chat" title="AI Assistant Chat">
-        💬
-    </a>
-
-    <script>
-        function togglePill(element) {
-            element.classList.toggle('active');
-            if (element.classList.contains('active')) {
-                if (!element.textContent.startsWith('✓')) {
-                    element.textContent = '✓ ' + element.textContent;
-                }
-            } else {
-                element.textContent = element.textContent.replace('✓ ', '');
-            }
-        }
-    </script>
 </body>
+
 </html>
